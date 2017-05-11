@@ -1,5 +1,5 @@
-import {Video, VideoCollection} from '../../app/ts/Model/resource';
-import {ISearchAdapter, IClassifiedVideoAdapter} from '../../app/ts/Model/res-adapter';
+import {Video, VideoCollection} from '../../ts/Model/resource';
+import {ISearchAdapter, IClassifiedVideoAdapter} from '../../ts/Model/res-adapter';
 
 module.exports = vcapi => {
     const {Video, VideoCollection} = vcapi
@@ -7,8 +7,9 @@ module.exports = vcapi => {
     class BilibiliAdapter implements ISearchAdapter, IClassifiedVideoAdapter {
         constructor() {
             this.get_detail = this.get_detail.bind(this)
+            this.client = {}
         }
-
+        private client
         async search_show(name: string, page: number, count?: number): Promise<VideoCollection[]> {
             return new Promise<VideoCollection[]>((fulfill, reject) => {
                 this.client.get('searches/show/by_keyword', {
